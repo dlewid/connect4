@@ -1,8 +1,8 @@
 const gridContainer = document.getElementById("container");
-let curPlayer = "redish";
+let curPlayer = "player1";
 
-let redWins = 0;
-let brownWins = 0;
+let player1Win = 0;
+let player2Win = 0;
 
 let myArray = Array.from({ length: 6 }, () => Array(7).fill(-1));
 
@@ -14,25 +14,26 @@ function makeGrid(row, cols) {
       gridContainer.appendChild(cell);
       cell.addEventListener("click", function () {
         placeDisk(cell, row);
-        myArray.forEach((row) => console.log(row));
         let result = checkWin(row, cols);
+
         if (result.win) {
-          if (result.player == 0) redWins++;
-          else brownWins++;
+          if (result.player == 0) player1Win++;
+          else player2Win++;
           updateWinsDisplay();
           const winButton = document.getElementById("win-button");
           winButton.style.visibility = "visible";
           let winner = document.querySelector(".winner");
+
           if (result.player == 0) {
-            winner.textContent = "Red Wins";
+            winner.textContent = "Player1 Wins";
             winner.style.color = getComputedStyle(
               document.documentElement
-            ).getPropertyValue("--redish");
+            ).getPropertyValue("--player1-disk");
           } else {
-            winner.textContent = "Brown Wins";
+            winner.textContent = "Player2 Wins";
             winner.style.color = getComputedStyle(
               document.documentElement
-            ).getPropertyValue("--brownish");
+            ).getPropertyValue("--player2");
           }
 
           winButton.addEventListener("click", function () {
@@ -55,14 +56,14 @@ function placeDisk(cell, row) {
   let i = row - 1;
   for (; i >= 0 && myArray[i][cellColumn] != -1; i--) {}
 
-  if (curPlayer == "redish") {
+  if (curPlayer == "player1") {
     myArray[i][cellColumn] = 0;
     showDisk(cellColumn.toString() + i.toString(), curPlayer);
-    curPlayer = "brownish";
+    curPlayer = "player2";
   } else {
     myArray[i][cellColumn] = 1;
     showDisk(cellColumn.toString() + i.toString(), curPlayer);
-    curPlayer = "redish";
+    curPlayer = "player1";
   }
 }
 
@@ -72,7 +73,7 @@ function showDisk(cell, curPlayer) {
 
   disk.style.visibility = "visible";
   let color = getComputedStyle(document.documentElement).getPropertyValue(
-    "--" + curPlayer
+    "--" + curPlayer + "-disk"
   );
   disk.style.backgroundColor = color;
 }
@@ -150,15 +151,15 @@ function resetGame(row, col) {
   }
 
   myArray = Array.from({ length: 6 }, () => Array(7).fill(-1));
-  curPlayer = "redish";
+  curPlayer = "player1";
 }
 
 function updateWinsDisplay() {
-  let redWinsElement = document.querySelector(".winner-display .red");
-  let brownWinsElement = document.querySelector(".winner-display .brown");
+  let player1WinElement = document.querySelector(".winner-display .red");
+  let player2WinElement = document.querySelector(".winner-display .brown");
 
-  redWinsElement.textContent = `red wins: ${redWins}`;
-  brownWinsElement.textContent = `brown wins: ${brownWins}`;
+  player1WinElement.textContent = `${player1Win}`;
+  player2WinElement.textContent = `${player2Win}`;
 }
 
 makeGrid(6, 7);

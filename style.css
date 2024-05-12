@@ -2,22 +2,24 @@
   --grid-cols: 7;
   --grid-rows: 6;
 
-  --pinkish: #fbe9d0;
-  --blueish: #244855;
-  --blueish-hover: #366c80;
-  --light-blueish: #90aead;
-  --redish: #e64833;
-  --brownish: #874f41;
-  --pinkish-opac: #e64833a2;
-  --blueish-hover-opac: #366c80c6;
+  --primary: #1a1a1a;
+  --secondary: #ff9e64;
+  --grid-hover: #2ac3de;
+  --grid-color: #24283b;
+  --player1: #9ece6a;
+  --player1-disk: #aee178;
+  --player2: #f7768e;
+  --player2-disk: #ff3f6f;
+  --button-background: #2c3043c4;
 }
 
 body {
-  background-color: var(--pinkish);
+  background-color: var(--primary);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 100%;
 }
 
 #container {
@@ -27,15 +29,24 @@ body {
   grid-gap: 10px;
 
   min-width: 50%;
-  max-width: 800px;
-  border: 20px solid var(--light-blueish);
+  border: 20px solid var(--secondary);
   padding: 0.5rem;
   border-radius: 10px;
 }
 
-@media (width > 1200px) {
+@media (min-width: 1200px) {
   #container {
     min-width: 600px;
+  }
+
+  .header {
+    margin-top: -2%;
+  }
+}
+
+@media (width < 700px) {
+  #container {
+    min-width: 350px;
   }
 }
 
@@ -43,39 +54,37 @@ body {
   aspect-ratio: 1;
 
   border-radius: 10px;
-  background: var(--blueish);
-  margin: 0px;
+  background: var(--grid-color);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#container > *:hover {
-  background: var(--blueish-hover);
+#container > *:hover:not(#win-button) {
+  background: var(--grid-hover);
 }
 
 .header {
-  font-size: 1.25rem;
   font-family: jaro;
-  color: var(--blueish);
+  color: var(--secondary);
 
-  margin: 2rem;
+  margin-bottom: -1em;
+  font-size: clamp(2rem, 3vw, 3rem);
 }
 
 .winner-display {
   display: flex;
   gap: 1rem;
-  margin: 3rem;
   font-family: jaro;
-  font-size: 1.5rem;
+  font-size: clamp(2.5rem, 5vw, 6rem);
 }
 
 .brown {
-  color: var(--brownish);
+  color: var(--player2);
 }
 
 .red {
-  color: var(--redish);
+  color: var(--player1);
 }
 
 .disk {
@@ -88,16 +97,20 @@ body {
 
 #win-button {
   position: absolute;
-  top: 50%;
   border: none;
   visibility: hidden;
+  width: 100%;
+  height: 100%;
+  top: 0;
 
   font-family: jaro;
-  color: var(--pinkish);
-  font-size: 1.5rem;
-  padding: 2rem;
-  background: var(--blueish-hover-opac);
-  border-radius: 10px;
+  color: white;
+  font-size: clamp(2rem, 5vw, 4rem);
+  background: var(--button-background);
+}
+
+.button-content {
+  margin-top: -6rem;
 }
 
 .winner {
