@@ -16,25 +16,30 @@ function makeGrid(row, cols) {
         placeDisk(cell, row);
         let result = checkWin(row, cols);
 
-        if (result.win) {
-          if (result.player == 0) player1Win++;
-          else player2Win++;
-          updateWinsDisplay();
+        if (result.win || checkForDraw(row, cols)) {
           const winButton = document.getElementById("win-button");
           winButton.style.visibility = "visible";
           let winner = document.querySelector(".winner");
 
           if (result.player == 0) {
+            player1Win++;
+            console.log(result.player);
+
             winner.textContent = "Player1 Wins";
             winner.style.color = getComputedStyle(
               document.documentElement
             ).getPropertyValue("--player1-disk");
-          } else {
+          } else if (result.player == 1) {
+            player2Win++;
             winner.textContent = "Player2 Wins";
             winner.style.color = getComputedStyle(
               document.documentElement
             ).getPropertyValue("--player2");
+          } else {
+            winner.textContent = "Draw";
           }
+
+          updateWinsDisplay();
 
           winButton.addEventListener("click", function () {
             resetGame(row, cols);
@@ -154,11 +159,20 @@ function resetGame(row, col) {
 }
 
 function updateWinsDisplay() {
-  let player1WinElement = document.querySelector(".winner-display .red");
-  let player2WinElement = document.querySelector(".winner-display .brown");
+  let player1WinElement = document.querySelector(".winner-display .player1");
+  let player2WinElement = document.querySelector(".winner-display .player2");
 
   player1WinElement.textContent = `${player1Win}`;
   player2WinElement.textContent = `${player2Win}`;
+}
+
+function checkForDraw(row, col) {
+  for (let i = 0; i < row; i++) {
+    for (let j = 0; j < col; j++) {
+      if (myArray[i][j] < 0) return false;
+    }
+  }
+  return true;
 }
 
 makeGrid(6, 7);
