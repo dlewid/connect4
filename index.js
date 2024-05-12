@@ -12,43 +12,76 @@ function makeGrid(row, cols) {
       let cell = document.createElement("div");
       cell.id = j.toString() + i.toString();
       gridContainer.appendChild(cell);
-      cell.addEventListener("click", function () {
-        placeDisk(cell, row);
-        let result = checkWin(row, cols);
-
-        if (result.win || checkForDraw(row, cols)) {
-          const winButton = document.getElementById("win-button");
-          winButton.style.visibility = "visible";
-          let winner = document.querySelector(".winner");
-
-          if (result.player == 0) {
-            player1Win++;
-            console.log(result.player);
-
-            winner.textContent = "Player1 Wins";
-            winner.style.color = getComputedStyle(
-              document.documentElement
-            ).getPropertyValue("--player1-disk");
-          } else if (result.player == 1) {
-            player2Win++;
-            winner.textContent = "Player2 Wins";
-            winner.style.color = getComputedStyle(
-              document.documentElement
-            ).getPropertyValue("--player2");
-          } else {
-            winner.textContent = "Draw";
-          }
-
-          updateWinsDisplay();
-
-          winButton.addEventListener("click", function () {
-            resetGame(row, cols);
-            winButton.style.visibility = "hidden";
-          });
-        }
-      });
     }
   }
+  gridContainer.addEventListener("mouseover", (event) => {
+    displayDiskOnMouseOver(event, row);
+  });
+
+  gridContainer.addEventListener("click", (event) => {
+    cell = event.target;
+    placeDisk(cell, row);
+
+    let result = checkWin(row, cols);
+
+    if (result.win || checkForDraw(row, cols)) {
+      const winButton = document.getElementById("win-button");
+      winButton.style.visibility = "visible";
+      let winner = document.querySelector(".winner");
+
+      if (result.player == 0) {
+        player1Win++;
+
+        winner.textContent = "Player1 Wins";
+        winner.style.color = getComputedStyle(
+          document.documentElement
+        ).getPropertyValue("--player1-disk");
+      } else if (result.player == 1) {
+        player2Win++;
+
+        winner.textContent = "Player2 Wins";
+        winner.style.color = getComputedStyle(
+          document.documentElement
+        ).getPropertyValue("--player2");
+      } else {
+        winner.textContent = "Draw";
+      }
+
+      updateWinsDisplay();
+
+      winButton.addEventListener("click", function () {
+        resetGame(row, cols);
+        winButton.style.visibility = "hidden";
+      });
+    }
+  });
+}
+
+function displayDiskOnMouseOver(event, row) {
+  let i = row - 1;
+  let cell = event.target;
+  let cellColumn = event.target.id[0];
+
+  for (; i >= 0 && myArray[i][cellColumn] != -1; i--) {}
+  let disk = document.createElement("div");
+  disk.className = "show-disk";
+
+  cell = document.getElementById(cellColumn.toString() + i.toString());
+  console.log(cellColumn.toString() + i.toString());
+
+  cell.appendChild(disk);
+
+  let color = getComputedStyle(document.documentElement).getPropertyValue(
+    "--" + curPlayer + "-disk"
+  );
+  disk.style.backgroundColor = color;
+
+  event.target.addEventListener("mouseout", (event) => {
+    disk.remove();
+  });
+  event.target.addEventListener("click", (event) => {
+    disk.remove();
+  });
 }
 
 function placeDisk(cell, row) {

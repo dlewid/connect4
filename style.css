@@ -93,6 +93,12 @@ body {
   border-radius: 50%;
 }
 
+.show-disk {
+  height: 80%;
+  width: 80%;
+  border-radius: 50%;
+}
+
 #win-button {
   position: absolute;
   border: none;
