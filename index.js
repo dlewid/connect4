@@ -42,36 +42,39 @@ function makeGrid(row, cols) {
           });
         }
       });
-
-      let disk = document.createElement("div");
-      disk.className = "disk";
-      cell.appendChild(disk);
     }
   }
 }
 
 function placeDisk(cell, row) {
+  let disk = document.createElement("div");
+  disk.className = "disk";
+
   let cellColumn = parseInt(cell.id[0]);
+
   if (myArray[0][cellColumn] > -1) return false;
+
   let i = row - 1;
   for (; i >= 0 && myArray[i][cellColumn] != -1; i--) {}
 
+  cell = document.getElementById(cellColumn.toString() + i.toString());
+  cell.appendChild(disk);
+
+  setDiskColor(cellColumn.toString() + i.toString(), curPlayer);
+
   if (curPlayer == "player1") {
     myArray[i][cellColumn] = 0;
-    showDisk(cellColumn.toString() + i.toString(), curPlayer);
     curPlayer = "player2";
   } else {
     myArray[i][cellColumn] = 1;
-    showDisk(cellColumn.toString() + i.toString(), curPlayer);
     curPlayer = "player1";
   }
 }
 
-function showDisk(cell, curPlayer) {
+function setDiskColor(cell, curPlayer) {
   let diskCell = document.getElementById(cell);
   let disk = diskCell.querySelector(".disk");
 
-  disk.style.visibility = "visible";
   let color = getComputedStyle(document.documentElement).getPropertyValue(
     "--" + curPlayer + "-disk"
   );
@@ -137,11 +140,12 @@ function checkWin(row, col) {
 function resetGame(row, col) {
   for (let i = 0; i < row; i++) {
     for (let j = 0; j < col; j++) {
-      let cell = document.getElementById(j.toString() + i.toString());
-      let disk = cell.querySelector(".disk");
+      if (myArray[i][j] > -1) {
+        let cell = document.getElementById(j.toString() + i.toString());
+        let disk = cell.querySelector(".disk");
 
-      disk.style.visibility = "hidden";
-      disk.style.backgroundColor = "transparent";
+        disk.remove();
+      }
     }
   }
 
