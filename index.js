@@ -79,7 +79,6 @@ function showDisk(cell, curPlayer) {
 }
 
 function checkWin(row, col) {
-  // Check horizontally
   for (let i = 0; i < row; i++) {
     for (let j = 0; j < col - 3; j++) {
       if (
@@ -93,7 +92,6 @@ function checkWin(row, col) {
     }
   }
 
-  // Check vertically
   for (let j = 0; j < col; j++) {
     for (let i = 0; i < row - 3; i++) {
       if (
@@ -107,7 +105,6 @@ function checkWin(row, col) {
     }
   }
 
-  // Check diagonally (top-left to bottom-right)
   for (let i = 0; i < row - 3; i++) {
     for (let j = 0; j < col - 3; j++) {
       if (
@@ -121,7 +118,6 @@ function checkWin(row, col) {
     }
   }
 
-  // Check diagonally (top-right to bottom-left)
   for (let i = 0; i < row - 3; i++) {
     for (let j = col - 1; j >= 3; j--) {
       if (
@@ -135,7 +131,6 @@ function checkWin(row, col) {
     }
   }
 
-  // No winner found
   return { win: false, player: -1 };
 }
 
