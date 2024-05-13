@@ -11,6 +11,8 @@
   --player2: #f7768e;
   --player2-disk: #ff3f6f;
   --button-background: #2c3043c4;
+  --player1-disk-placement: #aee178a4;
+  --player2-disk-placement: #ff3f6fa4;
 }
 
 body {

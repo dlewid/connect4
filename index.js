@@ -72,7 +72,7 @@ function displayDiskOnMouseOver(event, row) {
   cell.appendChild(disk);
 
   let color = getComputedStyle(document.documentElement).getPropertyValue(
-    "--" + curPlayer + "-disk"
+    "--" + curPlayer + "-disk-placement"
   );
   disk.style.backgroundColor = color;
 
