@@ -79,6 +79,7 @@ function displayDiskOnMouseOver(event, row) {
   event.target.addEventListener("mouseout", (event) => {
     disk.remove();
   });
+
   event.target.addEventListener("click", (event) => {
     disk.remove();
   });

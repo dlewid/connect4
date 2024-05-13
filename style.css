@@ -91,12 +91,16 @@ body {
   height: 80%;
   width: 80%;
   border-radius: 50%;
+
+  pointer-events: none;
 }
 
 .show-disk {
   height: 80%;
   width: 80%;
   border-radius: 50%;
+
+  pointer-events: none;
 }
 
 #win-button {
